@@ -56,7 +56,9 @@ node {
    stage('Sonar Analysis') {
      // build 'sonar'
       withSonarQubeEnv('sonar') {
-      sh "${mvnHome}/bin/mvn clean install sonar:sonar -Dsonar.username='admin' -Dsonar.password='admin'"
+	      String fileip1 = new File('/root/.jenkins/id.properties').text.readLines().get(0)
+	      SONAR_HOST_URL = "http:"+fileip1+":9000"
+	      sh "${mvnHome}/bin/mvn clean install sonar:sonar -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.username='admin' -Dsonar.password='admin'"
       }
    }
  
